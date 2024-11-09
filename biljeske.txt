@@ -1,0 +1,33 @@
+2. Cross-site scripting (XSS) - jedan tip XSS napada po izboru (bilo koji)
+
+- imamo okvir za unos komentara kroz koji korisnik 
+zeli unijet js kod
+
+- kad je ranjivtost onemogoucena -> sanitizacija, js se nece izvusit
+- kad je ranjivost omogucena -> nema sanitizacije, js ce se izvest
+
+Dodajte logiku da, ako je XSS ranjivost omogućena, aplikacija izravno prikazuje tekst korisnikovog unosa.
+Ako je XSS onemogućen, aplikacija treba sanitizirati tekst prije prikaza kako bi spriječila izvršavanje JavaScript-a.
+
+
+4. Nesigurna pohrana osjetljivih podataka (Sensitive Data Exposure)
+- nap bazu podatka s podatcima o karticama?
+-GDPR - definira koji pod se smiju javno prikazati, a koji ne
+Ja sam napravio tako da u bazu za neki privatni podatak s ukljucenom ranjivosti sprema obicni text a ak nije ukljucena sifrira al nez jel to dovoljno
+
+1. postavit mijenanje stanja checkboxa
+2. napravit da se za tocno odredenu situaciju obavlja sanitizacija
+3. isprobat da se izvede alert
+4. drugi dio projekta
+
+<img src="javascript:alert('XSS napad putem img tag-a');" />
+<IMG """><SCRIPT>alert("XSS")</SCRIPT>"\>
+<a href="javascript:alert(String.fromCharCode(88,83,83))">Click Me!</a>
+"<img src='x' onError='alert(\"XSS Napad!\")'/>"
+
+SDE:
+1. napravit bazu
+2. napravit spremanje u bazu
+-> ranjivost ukljucena -> samo spremi plain text
+-> ranjivost iskljucena -> spremi sifrirani tekst
+3. napravi dohvacanje iz baze
