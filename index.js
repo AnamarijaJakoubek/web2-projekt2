@@ -11,10 +11,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.PORT;
+const externalUrl = process.env.RENDER_EXTERNAL_URL; 
+const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4080;
+
+const config = {
+    baseURL: externalUrl || `https://localhost:${port}`,
+}
+
 let XSSVulnerable = false; 
 let SDEVulnerable = false;
-
 
 const algorithm = 'aes-256-cbc';
 const secretKey = process.env.SECRET_KEY;  
@@ -154,8 +159,15 @@ app.delete('/deleteAllCards', async (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-})
-
-
+if (externalUrl) { const hostname = '0.0.0.0'; //ne 127.0.0.1 
+    app.listen(port, hostname, () => { 
+      console.log(`Server locally running at http://${hostname}:${port}/ and from outside on ${externalUrl}`); 
+    });
+  } else { 
+    https.createServer({ 
+      key: fs.readFileSync('server.key'), 
+      cert: fs.readFileSync('server.cert') }, app) 
+      .listen(port, function () { 
+        console.log(`Server running at https://localhost:${port}/`);
+     });
+  }
