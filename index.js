@@ -114,7 +114,7 @@ app.post('/addCard', async (req, res) => {
 
         }
 
-        res.json({success: true, SDEVulnerable})
+        res.json({success: true, SDEVulnerable});
     } catch (err) {
         console.error("Greska pri unosi kartice: ", err);
         res.status(500).json({ success: false, message: 'Došlo je do pogreške pri pohranjivanju podataka.' });

@@ -20,6 +20,59 @@ function toggleSDE() {
     .catch(error => console.error('Greška prilikom promjene SDE postavke:', error));
 }
 
+function loadCards() {
+    console.log("pozvanaa loadComments");
+    fetch('/cards')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            const cardsDiv = document.getElementById('cards');
+            const delAllButton = document.getElementById('delAllButton');
+            let cardsBody = document.getElementById('cardsBody');
+            let cardsHeader = document.getElementById('cardsHeader');
+
+            console.log(data.cards.length);
+            if(!cardsBody) {
+                cardsBody = document.createElement("div");
+                cardsDiv.appendChild(cardsBody);
+                cardsHeader = document.createElement("div");
+                cardsHeader.innerHTML = `<div class="card">
+                    <div class="card-header">Broj kartice</div>
+                    <div class="card-header">Datum isteka</div>
+                    <div class="card-header">CVV</div>
+                </div>`;
+                cardsDiv.appendChild(cardsHeader);
+            }
+
+            if (data.cards.length > 0) {
+                delAllButton.style.display = "block";
+                cardsDiv.style.display = "block";
+                cardsBody.style.display = "block";
+                cardsHeader.style.display = "block";
+
+                cardsBody.innerHTML = ''; 
+
+                data.cards.forEach(card => {
+                    const cardDiv = document.createElement("div");
+                    cardDiv.classList.add('card');
+                    cardDiv.innerHTML = `
+                            <div>${card.cardnum}</div>
+                            <div>${card.expdate}</div>
+                            <div>${card.cvv}</div>
+                        `;
+                    cardsBody.appendChild(cardDiv);
+                })
+            } else {
+                delAllButton.style.display = "none";
+                cardsDiv.style.display = "none";
+            }
+
+           
+        })
+        .catch(error => console.error('Greska pri dohvacanju komentara: ', error));
+}
+
 function addCard(event) {
     event.preventDefault(); // Sprječava zadani submit obrazca
     console.log("Funckija addCard");
@@ -41,7 +94,7 @@ function addCard(event) {
             console.log("tttt");
 
             // Ažurira checkbox stanje prema odgovoru poslužitelja
-            document.getElementById('sdeCheckbox').checked = data.SDEVulnerableVulnerable;
+            document.getElementById('sdeCheckbox').checked = data.SDEVulnerable;
             loadCards();  
             event.target.reset();
         }
@@ -49,30 +102,10 @@ function addCard(event) {
     .catch(error => console.error('Error adding comment:', error));
 }
 
-function loadCards() {
-    console.log("pozvanaa loadComments");
-    fetch('/cards')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const cardsBody = document.getElementById('cardsBody');
-            cardsBody.innerHTML = '';
 
-            data.cards.forEach(card => {
-                const row = document.createElement("div");
-                    row.innerHTML = `
-                        <div>${card.cardnum}</div>
-                        <div>${card.expdate}</div>
-                        <div>${card.cvv}</div>
-                    `;
-                    cardsBody.appendChild(row);
-            })
-        })
-        .catch(error => console.error('Greska pri dohvacanju komentara: ', error));
-}
 
 async function deleteAllCards() {
-    const confirmation = confirm("Jeste li sigurni da želite obrisati sve komentare?");
+    const confirmation = confirm("Jeste li sigurni da želite obrisati sve kartice?");
     if (!confirmation) return;
 
     try {
@@ -82,9 +115,9 @@ async function deleteAllCards() {
         
         if (response.ok) {
             alert("Sve kartice su uspješno obrisane.");
-            document.getElementById("comments").innerHTML = '';
-            const delAllButton = document.getElementById('delAllCards');
-            document.getElementById("comments").style.display = "none";
+            document.getElementById("cards").innerHTML = '';
+            const delAllButton = document.getElementById('delAllButton');
+            document.getElementById("cards").style.display = "none";
             delAllButton.style.display = "none";
         } else {
             alert("Došlo je do pogreške prilikom brisanja komentara.");

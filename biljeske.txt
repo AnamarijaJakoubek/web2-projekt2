@@ -41,3 +41,4 @@ TO DO:
 
 
 POBRISAT KOMENTARE U KODU
+dodat pravila za duljinu kartice i to

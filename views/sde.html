@@ -39,13 +39,15 @@
             </form>
         </div>
 
-        <div id="cards">
+        <div id="cards" style="display: none;">
             <h2>Pohranjene kartice</h2>
             
             <div id="cardsHeader">
-                <div class="card-header">Broj kartice</div>
-                <div class="card-header">Datum isteka</div>
-                <div class="card-header">CVV</div>
+                <div class="card">
+                    <div class="card-header">Broj kartice</div>
+                    <div class="card-header">Datum isteka</div>
+                    <div class="card-header">CVV</div>
+                </div>
             </div>
 
             <div id="cardsBody">
@@ -53,7 +55,7 @@
         </div>
         
 
-    <button id="delAllButton" onclick="deleteAllComments()" style="display: none">Obriši sve kartice</button>
+    <button id="delAllButton" onclick="deleteAllCards()" style="display: none">Obriši sve kartice</button>
 
     <script src="/sde.js"></script>
 </body>

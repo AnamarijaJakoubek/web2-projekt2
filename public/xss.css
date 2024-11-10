@@ -146,3 +146,20 @@ label {
 input[type="checkbox"] {
     margin-right: 10px;
 }
+
+#delAllButton {
+    display: inline-block;
+    background-color: #dc3545; /* Red color */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#delAllButton:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
