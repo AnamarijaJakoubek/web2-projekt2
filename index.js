@@ -23,7 +23,6 @@ const iv = crypto.randomBytes(16);
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL, 
   });
-  console.log(process.env.DATABASE_URL);
 
   pool.connect()
   .then(client => {
@@ -60,14 +59,11 @@ function encrypt(text) {
 
 app.post('/addComment', async(req, res) => {
     let comment = req.body.comment;
-    console.log("/addComment: ", XSSVulnerable);
-    console.log(req.body);
 
     try {
         if(!XSSVulnerable) { //ranjivost iskljucena
             comment = sanitize(comment);
         }
-        console.log(comment);
         await pool.query('INSERT INTO comments (comment) VALUES ($1)', 
                     [comment]);
        res.json({ success: true, XSSVulnerable, comment });
@@ -83,7 +79,6 @@ app.post('/addComment', async(req, res) => {
 
 app.post('/addCard', async (req, res) => {
     const { cardNumber, expiryDate, cvv } = req.body;
-    console.log( cardNumber, expiryDate, cvv);
 
     try {
 
@@ -129,13 +124,11 @@ app.get('/getSDEStatus', (req, res) => {
 
 app.get('/comments', async(req, res) => {
     const { rows: comments } = await pool.query('SELECT comment FROM comments');
-    console.log("Komentari iz baze: ", comments);
     res.json( {comments});
 });
 
 app.get('/cards', async(req, res) => {
     const { rows: cards } = await pool.query('SELECT cardNum, expDate, cvv FROM cards');
-    console.log("Komentari iz baze: ", cards);
     res.json({cards});
 });
 

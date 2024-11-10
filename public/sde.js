@@ -3,7 +3,6 @@ function setSDECheckbox() {
      fetch('/getSDEStatus')
         .then(response => response.json())
         .then(data => {
-            console.log("Ispis u script.js:", data.SDEVulnerable);
             document.getElementById('sdeCheckbox').checked = data.SDEVulnerable;
         })
         .catch(error => console.error('Greška prilikom dohvaćanja SDE stanja:', error));
@@ -21,18 +20,15 @@ function toggleSDE() {
 }
 
 function loadCards() {
-    console.log("pozvanaa loadComments");
     fetch('/cards')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
 
             const cardsDiv = document.getElementById('cards');
             const delAllButton = document.getElementById('delAllButton');
             let cardsBody = document.getElementById('cardsBody');
             let cardsHeader = document.getElementById('cardsHeader');
 
-            console.log(data.cards.length);
             if(!cardsBody) {
                 cardsBody = document.createElement("div");
                 cardsDiv.appendChild(cardsBody);
@@ -75,7 +71,6 @@ function loadCards() {
 
 function addCard(event) {
     event.preventDefault(); 
-    console.log("Funckija addCard");
 
     const formData = new FormData(event.target);
     const cardNumber = formData.get("cardNumber");
@@ -89,10 +84,7 @@ function addCard(event) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         if (data.success) {
-            console.log("tttt");
-
             document.getElementById('sdeCheckbox').checked = data.SDEVulnerable;
             loadCards();  
             event.target.reset();
