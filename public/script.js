@@ -11,7 +11,6 @@ function setXSSCheckbox() {
         .catch(error => console.error('Greška prilikom dohvaćanja XSS stanja:', error));
 };
 
-
 function toggleXSS() {
     fetch('/toggleXSS', {
         method: 'POST'

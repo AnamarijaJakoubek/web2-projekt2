@@ -149,7 +149,7 @@ input[type="checkbox"] {
 
 #delAllButton {
     display: inline-block;
-    background-color: #dc3545; /* Red color */
+    background-color: #dc3545; 
     color: white;
     border: none;
     padding: 12px 20px;
@@ -161,5 +161,5 @@ input[type="checkbox"] {
 }
 
 #delAllButton:hover {
-    background-color: #c82333; /* Darker red on hover */
+    background-color: #c82333; 
 }

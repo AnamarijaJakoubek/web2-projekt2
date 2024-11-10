@@ -74,7 +74,7 @@ function loadCards() {
 }
 
 function addCard(event) {
-    event.preventDefault(); // Sprječava zadani submit obrazca
+    event.preventDefault(); 
     console.log("Funckija addCard");
 
     const formData = new FormData(event.target);
@@ -93,7 +93,6 @@ function addCard(event) {
         if (data.success) {
             console.log("tttt");
 
-            // Ažurira checkbox stanje prema odgovoru poslužitelja
             document.getElementById('sdeCheckbox').checked = data.SDEVulnerable;
             loadCards();  
             event.target.reset();

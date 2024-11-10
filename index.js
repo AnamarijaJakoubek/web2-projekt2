@@ -12,12 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT;
-let XSSVulnerable = false; //ranjivost iskljucena
+let XSSVulnerable = false; 
 let SDEVulnerable = false;
 
 
 const algorithm = 'aes-256-cbc';
-const secretKey = process.env.SECRET_KEY;  // Use environment variables for better security
+const secretKey = process.env.SECRET_KEY;  
 const iv = crypto.randomBytes(16);
 
 const pool = new Pool({
@@ -32,17 +32,6 @@ const pool = new Pool({
   .catch(err => {
     console.error('Greška pri povezivanju s bazom:', err.stack);
   });
-
-//await pool.query('INSERT INTO tickets (ticketId, vatin, firstName, lastName) VALUES ($1, $2, $3, $4)', [ticketId, vatin, firstName, lastName]);
-
-// app.get('/', async (req, res) => {
-//    // res.render('index');
-//    const { rows: comments } = await pool.query('SELECT comment FROM comments');
-//    console.log("Komentari iz baze: ", comments);
-   
-//    // Prosljeđivanje komentara u EJS
-//    res.render('index', { comments });
-// });
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'views','index.html')));
 app.get('/xss', (req, res) => res.sendFile(path.join(__dirname, 'views', 'xss.html')));
@@ -79,11 +68,8 @@ app.post('/addComment', async(req, res) => {
             comment = sanitize(comment);
         }
         console.log(comment);
-        //!!upisat komentar u bazu
         await pool.query('INSERT INTO comments (comment) VALUES ($1)', 
                     [comment]);
-        //res.redirect('/');
-       // res.json({ success: true, XSSVulnerable });
        res.json({ success: true, XSSVulnerable, comment });
 
     } catch (err) {
@@ -179,4 +165,4 @@ app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 })
 
-//<script>alert('Stored XSS attack!')</script>
+

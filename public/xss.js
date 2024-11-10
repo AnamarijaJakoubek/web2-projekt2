@@ -9,7 +9,6 @@ function setXSSCheckbox() {
         .catch(error => console.error('Greška prilikom dohvaćanja XSS stanja:', error));
 };
 
-
 function toggleXSS() {
     fetch('/toggleXSS', {
         method: 'POST'
@@ -38,7 +37,7 @@ function loadComments() {
                     comment = comment.comment;
                     console.log("bb", comment);
                     const commentDiv = document.createElement('div');
-                    commentDiv.classList.add('comment');  // Dodaje klasu za stil komentara
+                    commentDiv.classList.add('comment'); 
                     commentDiv.innerHTML = comment;
                     document.getElementById('comments').appendChild(commentDiv);
                 })
@@ -54,7 +53,7 @@ function loadComments() {
 
 function addComment(event) {
     console.log("Funckija addComment");
-    event.preventDefault(); // Sprječava zadani submit obrazca
+    event.preventDefault(); 
 
     const formData = new FormData(event.target);
     const comment = formData.get("comment");
@@ -68,21 +67,13 @@ function addComment(event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            console.log("tttt");
-
-            // Ažurira checkbox stanje prema odgovoru poslužitelja
             document.getElementById('xssCheckbox').checked = data.XSSVulnerable;
-            //const commentDiv = document.createElement('div');
             loadComments();
-            //commentDiv.innerHTML = comment;
-            //document.getElementById('comments').appendChild(commentDiv);   
             event.target.reset();
         }
     })
     .catch(error => console.error('Error adding comment:', error));
 }
-
-
 
 async function deleteAllComments() {
     const confirmation = confirm("Jeste li sigurni da želite obrisati sve komentare?");
@@ -107,8 +98,6 @@ async function deleteAllComments() {
         alert("Došlo je do pogreške prilikom povezivanja s poslužiteljem.");
     }
 }
-
-
 
 window.onload = function() {
     setXSSCheckbox();
