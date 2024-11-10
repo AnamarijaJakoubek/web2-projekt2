@@ -4,38 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigurnosna aplikacija</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/sde.css">
 </head>
-<body>
-    <h1>Cross-site scripting (XSS)</h1>
-        <div class="container">
-            <label for="xssCheckbox">Omogući XSS ranjivost:</label>
-            <input type="checkbox" id="xssCheckbox" onclick="toggleXSS()">
-            
-            <form id="commentForm" onsubmit="addComment(event)">
-                <input type="text" name="comment" placeholder="Unesite komentar" required>
-                <button type="submit">Dodaj komentar</button>
-            </form>
-        </div>
-        
-            
-        <div id="comments">
-            <h2>Komentar</h2>
-        </div>
-        
+<body> 
     <h1>Nesigurna pohrana osjetljivih podataka (Sensitive Data Exposure)</h1>
-        <div class="container2">
-            <label for="sdeCheckbox">Omogući XSS ranjivost:</label>
+     <div class="buttons">
+        <button onclick="window.location.href='/'">Početna</button>
+        <button onclick="window.location.href='/xss'">Cross-Site-Scripting (XSS)</button>
+    </div>   
+    
+    <div id="opis">
+        <section>
+            <h3>Što je nesigurna pohrana osjetljivih podataka?</h3>
+            <p>Ovaj napad omogućava napadaču da dođe do osjetljivih podataka, kao što su brojevi kreditnih kartica, lozinke i drugi osjetljivi podaci koji nisu pravilno zaštićeni.</p>
+        </section>
+    </div>
+    
+    <div id="upute">
+        <section>
+            <h3>Upute:</h3>
+            <p>Ovdje možete unijeti podatke kreditne kartice. Kada omogućite ranjivost, podaci se spremaju nesigurno.</p>
+        </section>
+    </div>
+
+    <div class="container2">
+            <label for="sdeCheckbox">Omogući SDE ranjivost:</label>
             <input type="checkbox" id="sdeCheckbox" onclick="toggleSDE()">
             
-            <form id="cardForm" onsubmit="addData(event)">
-                <input type="text" name="cardId" placeholder="Unesite broj kartice" required>
-                <input type="text" name="date" placeholder="Unesite broj kartice" required>
-                <input type="text" name="cvv" placeholder="Unesite broj kartice" required>
+            <form id="cardForm" onsubmit="addCard(event)">
+                <input type="text" name="cardNumber" placeholder="Unesite broj kartice" required>
+                <input type="text" name="expiryDate" placeholder="Unesite datum isteka" required>
+                <input type="text" name="cvv" placeholder="Unesite CVV" required>
                 <button type="submit">Dodaj karticu</button>
             </form>
         </div>
-   
-    <script src="/script.js"></script>
+
+        <div id="cards">
+            <h2>Pohranjene kartice</h2>
+            
+            <div id="cardsHeader">
+                <div class="card-header">Broj kartice</div>
+                <div class="card-header">Datum isteka</div>
+                <div class="card-header">CVV</div>
+            </div>
+
+            <div id="cardsBody">
+            </div>
+        </div>
+        
+
+    <button id="delAllButton" onclick="deleteAllComments()" style="display: none">Obriši sve kartice</button>
+
+    <script src="/sde.js"></script>
 </body>
 </html>

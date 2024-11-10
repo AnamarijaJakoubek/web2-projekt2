@@ -4,10 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigurnosna aplikacija</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/xss.css">
 </head>
 <body>
     <h1>Cross-site scripting (XSS)</h1>
+    <div class="buttons">
+        <button onclick="window.location.href='/'">Početna</button>
+        <button onclick="window.location.href='/sde'">Nesigurna pohrana osjetljivih podataka</button>
+    </div>
+    <div id="opis">
+        <section>
+            <h3>Što je XSS napad?</h3>
+            <p>XSS (Cross-Site Scripting) napad omogućava napadaču umetanje zlonamjernog JavaScript koda u web-stranicu koju će vidjeti drugi korisnici. Ovaj napad može rezultirati krađom podataka poput kolačića, manipulacijom sadržajem stranice ili preusmjeravanjem korisnika na maliciozne stranice.</p>
+        </section>
+    </div>
+   
+
+    <div id="upute">
+        <section>
+            <h3>Upute:</h3>
+            <ol>
+                <li><strong>Uključivanje/isključivanje XSS ranjivosti:</strong> Označavanjem checkboxa korisnik može uključiti ili isključiti XSS ranjivost.</li>
+                <li><strong>Sanitizacija unosa:</strong> Kada je ranjivost isključena, sanitizacija se provodi zamjenom znakova 
+                    <strong>&</strong>, <strong>'</strong>, <strong>"</strong>, <strong><</strong>, <strong>></strong>, <strong>/</strong> i <strong>`</strong> 
+                    s odgovarajućim HTML entitetima kako bi se spriječio napad.</li>
+                <li><strong>Omogućena ranjivost:</strong> Kada je ranjivost uključena, sanitizacija se ne provodi, što omogućava napadaču unos malicioznog koda.</li>
+            </ol>
+        </section>
+        <section>
+            <h3>Primjeri korisničkih unosa:</h3>
+            <ol>
+                <li>&lt;IMG SRC=# onmouseover=&quot;alert(&#39;XSS&#39;)&quot;&gt;</li>
+                <li>&lt;a href=&quot;javascript:alert(&#39;XSS&#39;)&quot;&gt;Klikni me&lt;/a&gt;</li>
+                <li>&lt;a onmouseover=&quot;alert(document.cookie)&quot;&gt;xxs link&lt;/a&gt;</li>
+                <li>&lt;textarea oninput=&quot;alert(&#39;XSS&#39;)&quot;&gt;Type here&lt;/textarea&gt;</li>
+                <li>&lt;div style=&quot;width:100px; height:100px;&quot; onclick=&quot;alert(&#39;XSS&#39;)&quot;&gt;Klikni me&lt;/div&gt;</li>
+                <li>&lt;iframe src=&quot;javascript:alert(&#39;XSS&#39;)&quot;&gt;&lt;/iframe&gt;</li>
+                <li>&lt;img src=x onerror=&quot;alert(&#39;XSS&#39;)&quot;&gt;</li>
+            </ol>
+        </section>
+    </div>
+
         <div class="container">
             <label for="xssCheckbox">Omogući XSS ranjivost:</label>
             <input type="checkbox" id="xssCheckbox" onclick="toggleXSS()">
@@ -18,24 +55,10 @@
             </form>
         </div>
         
-            
-        <div id="comments">
-            <h2>Komentar</h2>
+        <div id="comments" style="display: none;">
         </div>
-        
-    <h1>Nesigurna pohrana osjetljivih podataka (Sensitive Data Exposure)</h1>
-        <div class="container2">
-            <label for="sdeCheckbox">Omogući XSS ranjivost:</label>
-            <input type="checkbox" id="sdeCheckbox" onclick="toggleSDE()">
-            
-            <form id="cardForm" onsubmit="addData(event)">
-                <input type="text" name="cardId" placeholder="Unesite broj kartice" required>
-                <input type="text" name="date" placeholder="Unesite broj kartice" required>
-                <input type="text" name="cvv" placeholder="Unesite broj kartice" required>
-                <button type="submit">Dodaj karticu</button>
-            </form>
-        </div>
-   
-    <script src="/script.js"></script>
+
+        <button id="delAllButton" onclick="deleteAllComments()" style="display: none">Obriši sve komentare</button>
+        <script src="/xss.js"></script>
 </body>
 </html>
