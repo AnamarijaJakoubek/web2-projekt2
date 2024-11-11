@@ -73,9 +73,27 @@ function addCard(event) {
     event.preventDefault(); 
 
     const formData = new FormData(event.target);
-    const cardNumber = formData.get("cardNumber");
-    const expiryDate = formData.get("expiryDate");
-    const cvv = formData.get("cvv");    
+    const cardNumber = formData.get("cardNumber").trim();
+    const expiryDate = formData.get("expiryDate").trim();
+    const cvv = formData.get("cvv").trim();
+
+    const cardNumberPattern = /^\d{16}$/;
+    if (!cardNumberPattern.test(cardNumber)) {
+        alert("Card number must be exactly 16 digits.");
+        return;
+    }
+
+    const expiryDatePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])$/;
+    if (!expiryDatePattern.test(expiryDate)) {
+        alert("Expiry date must be in the format dd/mm.");
+        return;
+    }
+
+    const cvvPattern = /^\d{3}$/;
+    if (!cvvPattern.test(cvv)) {
+        alert("CVV must be exactly 3 digits.");
+        return;
+    }
 
     fetch('/addCard', {
         method: 'POST',
