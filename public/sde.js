@@ -79,19 +79,19 @@ function addCard(event) {
 
     const cardNumberPattern = /^\d{16}$/;
     if (!cardNumberPattern.test(cardNumber)) {
-        alert("Card number must be exactly 16 digits.");
+        alert("Broj kartice mora imati točno 16 znamenki.");
         return;
     }
 
     const expiryDatePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])$/;
     if (!expiryDatePattern.test(expiryDate)) {
-        alert("Expiry date must be in the format dd/mm.");
+        alert("Datum isteka mora biti u formatu dd/mm.");
         return;
     }
 
     const cvvPattern = /^\d{3}$/;
     if (!cvvPattern.test(cvv)) {
-        alert("CVV must be exactly 3 digits.");
+        alert("CVV mora imati točno 3 znamenke.");
         return;
     }
 
