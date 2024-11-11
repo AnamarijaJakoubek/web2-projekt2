@@ -86,8 +86,6 @@ app.post('/addCard', async (req, res) => {
     const { cardNumber, expiryDate, cvv } = req.body;
 
     try {
-
-        console.log(crypto.randomBytes(32));
         if(!SDEVulnerable) {
             const encryptedCardNumber = encrypt(cardNumber);
             const encryptedExpirationDate = encrypt(expiryDate);
